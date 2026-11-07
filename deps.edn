@@ -1,1 +1,9 @@
-{:paths ["resources"]}
+{:paths ["." "tooling"]
+ :deps {org.clojure/clojure {:mvn/version "1.12.0"}}
+ :aliases
+ {:validate-concepts
+  {:extra-deps {org.protocol-robustness/prf-core
+                {:git/url "https://github.com/protocol-robustness/protocol-robustness-framework.git"
+                 :git/sha "85983ba2766908d8c68792b090fcfafb378ea468"
+                 :deps/root "."}}
+   :main-opts ["-m" "validate-concepts"]}}}

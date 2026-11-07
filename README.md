@@ -1,32 +1,51 @@
 # PRF extensions
 
-This repository is the local extraction workspace for first-party PRF
-extensions and declarative concept bundles. It currently contains the concept
-catalogue split into three logical bundles:
+Shared first-party source repository for PRF executable extension packages,
+protocol adapters, and declarative concept bundles. Package and bundle
+versions are independent; this repository has no repository-wide release
+version.
 
-- `:prf.concepts/foundation` — concepts and mapping metadata owned by `:shared`.
-- `:prf.concepts/prf` — concepts and mappings owned by `:protocol/prf`.
-- `:prf.concepts/sew-v1` — concepts and mappings owned by `:protocol/sew-v1`.
+## Initial contents
 
-The bundle registry and manifests are under `resources/data/concept-bundles/`.
-Concept definitions and mapping files retain their catalogue-relative paths
-under `resources/data/concepts/` and `resources/data/concept-mappings/` so an
-explicit resource lookup can consume them without a checkout path. The legacy
-catalogue registry is included as a compatibility view.
+- `packages/force-authorisation/` — protocol-neutral scoped authorisation
+  verification.
+- `packages/held-custody/` — custody adjustment and admission contracts.
+- `concepts/` — three declarative bundles, 50 concept entries, and their
+  mappings.
+- `adapters/sew/` — reserved for Sew-specific adapters after their private
+  PRF dependencies are separated behind public contracts.
 
-These bundles are declarative data. They have no executable entrypoints and do
-not change protocol execution or outcome roots. The manifest roots are local
-content identities, not publication, trust, approval, or authority claims.
+The two executable packages depend on the versioned
+`resolver-sim.extensions.api.v1` facade from PRF core, pinned to source commit
+`85983ba2766908d8c68792b090fcfafb378ea468`. That source is not a published
+core artifact. The packages and bundle copies are incubating and are not
+independently qualified releases. The source pin is reproducible, but its
+repository dependency closure is broader than a future standalone API
+artifact.
 
-## Extraction status
+## Validate
 
-This is a local repository with no configured remote or published release.
-The PRF repository still contains its current catalogue and compatibility
-loader; this copy is prepared for independent qualification and pinning before
-that runtime source is retired. Do not treat the copies as a completed runtime
-migration until a consumer resolves this repository at an immutable commit and
-qualifies the resulting source closure.
+From the repository root:
 
-The bundle manifests use the explicit `prf.concept-bundle.v1` schema. Bundle
-dependencies pin both ID and version, and bundle/catalogue roots bind manifest
-metadata plus the exact concept and mapping file bytes.
+```sh
+clojure -Srepro -M:validate-concepts
+```
+
+From either package directory:
+
+```sh
+clojure -Srepro -M:test
+```
+
+Passing these checks demonstrates the tested source revision only. It does
+not establish production authority, security qualification, deployment, or
+publication.
+
+## Concept identities
+
+The extracted bundle manifests and paths differ from the in-PRF catalogue
+copy. Their roots are new content identities. The old catalogue remains in
+PRF until an independently qualified pinned consumer migration is complete;
+historical references to the old roots must continue to resolve there.
+
+This repository currently has no configured remote or published artifacts.

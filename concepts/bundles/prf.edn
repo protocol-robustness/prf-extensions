@@ -9,13 +9,13 @@
          :concepts
          [#:concept{:id :assurance/pro-rata-evm-v2,
                     :file
-                    "resource:data/concepts/assurance/pro_rata_evm_v2.edn"}
+                    "resource:concepts/definitions/assurance/pro_rata_evm_v2.edn"}
           #:concept{:id :framework/current-privacy-policy,
                     :file
-                    "resource:data/concepts/framework/current_privacy_policy.edn"}
+                    "resource:concepts/definitions/framework/current_privacy_policy.edn"}
           #:concept{:id :framework/privacy-policy,
                     :file
-                    "resource:data/concepts/framework/privacy_policy.edn"}],
+                    "resource:concepts/definitions/framework/privacy_policy.edn"}],
          :mapping-files
          [#:mapping{:protocol :protocol/prf,
-                    :file "resource:data/concept-mappings/prf.edn"}]}
+                    :file "resource:concepts/mappings/prf.edn"}]}

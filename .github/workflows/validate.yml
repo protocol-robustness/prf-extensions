@@ -1,0 +1,34 @@
+name: Validate PRF extensions
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  concept-bundles:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: DeLaGuardo/setup-clojure@12.5
+        with:
+          cli: 1.11.1.1435
+      - name: Validate locked concept bundle resolution
+        run: clojure -Srepro -M:validate-concepts
+
+  executable-packages:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        package: [force-authorisation, held-custody]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: DeLaGuardo/setup-clojure@12.5
+        with:
+          cli: 1.11.1.1435
+      - name: Test package
+        working-directory: packages/${{ matrix.package }}
+        run: clojure -Srepro -M:test

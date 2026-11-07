@@ -1,0 +1,13 @@
+{:schema :prf.concept-catalogue-lock.v1
+ :catalogue/root "sha256:55e1fade9ecaff4cc548b4bd491686f897c8f62c355038766d52ffc39cc60d5f"
+ :concept-count 50
+ :bundles
+ {:prf.concepts/foundation
+  {:version "0.1.0"
+   :content-root "sha256:7e2d3490c5ac5eda1bc6c761396b5ffaf9f958de90279f53ba82c8147e4119e4"}
+  :prf.concepts/prf
+  {:version "0.1.0"
+   :content-root "sha256:27fc7213d1bef60c422dd14295e4bfd4e8fa6c91c661f6a27d6795f3dd7ce519"}
+  :prf.concepts/sew-v1
+  {:version "0.1.0"
+   :content-root "sha256:e147694788070003855f50645c1bcf12805b175f87326f8f6d60e6a6d29aa550"}}}

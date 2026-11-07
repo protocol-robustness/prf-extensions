@@ -1,14 +1,14 @@
 #:concept-bundle-registry{:version 1,
                           :bundles
                           [#:bundle{:manifest
-                                    "resource:data/concept-bundles/foundation.edn",
+                                    "resource:concepts/bundles/foundation.edn",
                                     :id :prf.concepts/foundation,
                                     :owner :shared}
                            #:bundle{:manifest
-                                    "resource:data/concept-bundles/prf.edn",
+                                    "resource:concepts/bundles/prf.edn",
                                     :id :prf.concepts/prf,
                                     :owner :protocol/prf}
                            #:bundle{:manifest
-                                    "resource:data/concept-bundles/sew-v1.edn",
+                                    "resource:concepts/bundles/sew-v1.edn",
                                     :id :prf.concepts/sew-v1,
                                     :owner :protocol/sew-v1}]}

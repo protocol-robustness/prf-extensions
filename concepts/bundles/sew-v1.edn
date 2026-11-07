@@ -9,27 +9,27 @@
          :concepts
          [#:concept{:id :allocation/deferred-class,
                     :file
-                    "resource:data/concepts/allocation/deferred_class.edn"}
+                    "resource:concepts/definitions/allocation/deferred_class.edn"}
           #:concept{:id :allocation/fractional-remainder,
                     :file
-                    "resource:data/concepts/allocation/fractional_allocation.edn"}
+                    "resource:concepts/definitions/allocation/fractional_allocation.edn"}
           #:concept{:id :allocation/slash-obligation,
                     :file
-                    "resource:data/concepts/allocation/slash_obligation.edn"}
+                    "resource:concepts/definitions/allocation/slash_obligation.edn"}
           #:concept{:id :concept/confidence,
-                    :file "resource:data/concepts/framework/confidence.edn"}
+                    :file "resource:concepts/definitions/framework/confidence.edn"}
           #:concept{:id :concept/configuration,
-                    :file "resource:data/concepts/framework/configuration.edn"}
+                    :file "resource:concepts/definitions/framework/configuration.edn"}
           #:concept{:id :concept/conservation,
-                    :file "resource:data/concepts/framework/conservation.edn"}
+                    :file "resource:concepts/definitions/framework/conservation.edn"}
           #:concept{:id :decision-quality/solvency-status,
                     :file
-                    "resource:data/concepts/decision-quality/solvency.edn"}
+                    "resource:concepts/definitions/decision-quality/solvency.edn"}
           #:concept{:id :mechanism/pro-rata-allocation,
                     :file
-                    "resource:data/concepts/mechanism/pro_rata_allocation.edn"}
+                    "resource:concepts/definitions/mechanism/pro_rata_allocation.edn"}
           #:concept{:id :yield/yield-bearing,
-                    :file "resource:data/concepts/yield/yield_bearing.edn"}],
+                    :file "resource:concepts/definitions/yield/yield_bearing.edn"}],
          :mapping-files
          [#:mapping{:protocol :protocol/sew-v1,
-                    :file "resource:data/concept-mappings/sew-v1.edn"}]}
+                    :file "resource:concepts/mappings/sew-v1.edn"}]}

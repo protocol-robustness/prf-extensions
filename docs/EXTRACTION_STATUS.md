@@ -1,0 +1,76 @@
+# Initial extraction status
+
+Status: **incubating local extraction; not published or independently
+qualified**.
+
+## Included
+
+- `packages/force-authorisation/` and its tests.
+- `packages/held-custody/` and its tests.
+- Three concept bundles, 50 concept entries, and their mappings.
+- Runtime package source copied from PRF revision
+  `e4f9bae492c2a1dd29f771886ec08af69e52f9b6`; the pinned API commit is its
+  ancestor and the API facade has no diff between those revisions.
+
+The executable packages import the versioned `resolver-sim.extensions.api.v1`
+facade and pin PRF core source to staging commit
+`85983ba2766908d8c68792b090fcfafb378ea468`. This commit is immutable, but the
+API has no standalone published artifact. The full PRF repository remains a
+broader dependency than the desired API package.
+
+The extracted runtime source imports only the public API facade. The copied
+conformance tests still import PRF implementation namespaces to compare
+extension behavior with core behavior. Those tests pass, but they are not the
+clean independent-consumer test required for Q1; split public API consumer
+tests from core integration tests before claiming that gate.
+
+The Sew-specific force-authorisation adapter was not extracted: it currently
+imports researcher and authority implementation namespaces plus the protocol
+registry. See `../adapters/sew/README.md`.
+
+## Verification performed
+
+- The original PRF API-closure qualification script passed: 105 tests, 603
+  assertions, source closure `sha256:ed63122aa5dd54274926dde94f8657fbcef04d825ffaa95aff0dd6ca70d30cf2`.
+- Extracted force-authorisation package tests passed against the current local
+  PRF source override: 3 tests, 11 assertions.
+- Extracted held-custody package tests passed against the current local PRF
+  source override: 102 tests, 587 assertions.
+- The extracted concept registry loaded as 3 bundles and 50 entries with root
+  `sha256:55e1fade9ecaff4cc548b4bd491686f897c8f62c355038766d52ffc39cc60d5f`.
+
+These checks do not establish an independently fetched Git dependency or a
+qualified release. Attempting the pinned Git consumer from this sandbox was
+blocked because Clojure could not write the shared `~/.gitlibs` cache. Package
+tests therefore used a temporary local-root override; the committed package
+manifests retain the immutable staging source pin.
+
+## Concept identity migration
+
+The source catalogue validated in PRF at revision
+`e4f9bae492c2a1dd29f771886ec08af69e52f9b6` had catalogue root
+`sha256:5dee6023ad4c3820391603e2f427b5a275f2114c3c0b78cf169b5fcef7a63cec`.
+The extracted manifests use `concepts/...` resource paths and produce the new
+root recorded above. Treat these roots as distinct. Historical evidence bound
+to the source root remains associated with the PRF catalogue until a pinned
+consumer migration is separately reviewed.
+
+This is a local descriptive migration record, not signed provenance, approval,
+publication, or a claim of root equivalence.
+
+## Remaining release gates
+
+1. Establish the repository remote and owners through the authorized workflow.
+2. Publish or independently qualify a narrow immutable PRF API artifact and
+   point both packages at it.
+3. Run clean-checkout package tests against the pinned dependency without a
+   local-root override.
+4. Define and validate package manifests, dependency closure, and package
+   source/artifact roots.
+5. Separate the Sew adapter's research/authority inputs behind public
+   contracts, then extract and qualify it.
+6. Add package-level CI, composition tests, and release evidence.
+7. Update PRF to consume pinned bundles/packages only after the new roots and
+   dependency closure are independently reviewed.
+
+No remote is configured. No publication or staging action has been performed.

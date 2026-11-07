@@ -1,0 +1,116 @@
+#:bundle{:schema "prf.concept-bundle.v1",
+         :id :prf.concepts/foundation,
+         :version "0.1.0",
+         :catalogue-schema-version 1,
+         :status :incubating,
+         :owner :shared,
+         :dependencies [],
+         :concepts
+         [#:concept{:id :allocation/bounty-payable,
+                    :file
+                    "resource:concepts/definitions/allocation/bounty_payable.edn"}
+          #:concept{:id :allocation/bounty-payable-reserve,
+                    :file
+                    "resource:concepts/definitions/allocation/bounty_payable_reserve.edn"}
+          #:concept{:id :allocation/deferred-claim,
+                    :file
+                    "resource:concepts/definitions/allocation/deferred_claim.edn"}
+          #:concept{:id :allocation/partial-fill,
+                    :file "resource:concepts/definitions/allocation/partial_fill.edn"}
+          #:concept{:id :allocation/pro-rata-fairness,
+                    :file
+                    "resource:concepts/definitions/allocation/pro_rata_fairness.edn"}
+          #:concept{:id :allocation/redistribution-fairness,
+                    :file
+                    "resource:concepts/definitions/allocation/redistribution_fairness.edn"}
+          #:concept{:id :allocation/shortfall,
+                    :file "resource:concepts/definitions/allocation/shortfall.edn"}
+          #:concept{:id :allocation/slash-distribution,
+                    :file
+                    "resource:concepts/definitions/allocation/slash_distribution.edn"}
+          #:concept{:id :assurance/evidence-backed-classification,
+                    :file
+                    "resource:concepts/definitions/assurance/evidence_backed_classification.edn"}
+          #:concept{:id :attestation/verification,
+                    :file "resource:concepts/definitions/assurance/attestation.edn"}
+          #:concept{:id :consensus/authority,
+                    :file
+                    "resource:concepts/definitions/decision-quality/authority.edn"}
+          #:concept{:id :consensus/escalation,
+                    :file
+                    "resource:concepts/definitions/decision-quality/escalation.edn"}
+          #:concept{:id :consensus/evidence,
+                    :file
+                    "resource:concepts/definitions/decision-quality/evidence.edn"}
+          #:concept{:id :consensus/finality,
+                    :file
+                    "resource:concepts/definitions/decision-quality/finality.edn"}
+          #:concept{:id :consensus/legitimacy,
+                    :file
+                    "resource:concepts/definitions/decision-quality/legitimacy.edn"}
+          #:concept{:id :consensus/liveness,
+                    :file
+                    "resource:concepts/definitions/decision-quality/liveness.edn"}
+          #:concept{:id :forensic/evidence-chain,
+                    :file "resource:concepts/definitions/assurance/evidence_chain.edn"}
+          #:concept{:id :framework/content-root,
+                    :file "resource:concepts/definitions/framework/content_root.edn"}
+          #:concept{:id :framework/creation-provenance,
+                    :file
+                    "resource:concepts/definitions/framework/creation_provenance.edn"}
+          #:concept{:id :framework/currency,
+                    :file "resource:concepts/definitions/framework/currency.edn"}
+          #:concept{:id :framework/evidence-policy,
+                    :file
+                    "resource:concepts/definitions/framework/evidence_policy.edn"}
+          #:concept{:id :framework/held-custody,
+                    :file "resource:concepts/definitions/framework/held_custody.edn"}
+          #:concept{:id :framework/incentive,
+                    :file "resource:concepts/definitions/framework/incentive.edn"}
+          #:concept{:id :framework/incentive-compatibility,
+                    :file
+                    "resource:concepts/definitions/framework/incentive_compatibility.edn"}
+          #:concept{:id :framework/outside-option,
+                    :file "resource:concepts/definitions/framework/outside_option.edn"}
+          #:concept{:id :framework/procedure-execution-witness,
+                    :file
+                    "resource:concepts/definitions/framework/procedure_execution_witness.edn"}
+          #:concept{:id :framework/protocol-extension-boundary,
+                    :file
+                    "resource:concepts/definitions/framework/core_protocol_boundary.edn"}
+          #:concept{:id :framework/registry-entry-hash,
+                    :file
+                    "resource:concepts/definitions/framework/registry_entry_hash.edn"}
+          #:concept{:id :framework/research-assignment,
+                    :file
+                    "resource:concepts/definitions/framework/research_assignment.edn"}
+          #:concept{:id :framework/research-command,
+                    :file
+                    "resource:concepts/definitions/framework/research_command.edn"}
+          #:concept{:id :framework/review-certificate,
+                    :file
+                    "resource:concepts/definitions/framework/review_certificate.edn"}
+          #:concept{:id :framework/review-member-canonical-indices,
+                    :file
+                    "resource:concepts/definitions/framework/review_member_canonical_indices.edn"}
+          #:concept{:id :framework/semantic-commitments,
+                    :file
+                    "resource:concepts/definitions/framework/semantic_commitments.edn"}
+          #:concept{:id :framework/source-creation,
+                    :file
+                    "resource:concepts/definitions/framework/source_creation.edn"}
+          #:concept{:id :governance/proposed-content,
+                    :file
+                    "resource:concepts/definitions/decision-quality/proposed_content.edn"}
+          #:concept{:id :governance/proposed-content-root,
+                    :file
+                    "resource:concepts/definitions/decision-quality/proposed_content_root.edn"}
+          #:concept{:id :security/force-authorisation,
+                    :file
+                    "resource:concepts/definitions/security/force_authorisation.edn"}
+          #:concept{:id :verifiable-assurance/forensic-confidence,
+                    :file
+                    "resource:concepts/definitions/assurance/verifiable_assurance.edn"}],
+         :mapping-files
+         [#:mapping{:protocol :shared,
+                    :file "resource:concepts/mappings/shared.edn"}]}
