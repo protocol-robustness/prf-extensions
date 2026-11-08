@@ -9,6 +9,8 @@ release, qualification, or deployment.
 
 - `packages/force-authorisation/` and its tests.
 - `packages/held-custody/` and its tests.
+- `packages/repairability-report/`, a dependency-free, read-only renderer that
+  retains repair and verification inputs as unverified assertions.
 - Three concept bundles, 50 concept entries, and their mappings.
 - Declarative `prf.extension-package.v1` manifests with runtime consistency
   validation.
@@ -26,8 +28,8 @@ contract. It is pending independent review and staging admission. Until that
 revision is integrated and fetchable, these package manifests continue to pin
 the broader PRF root.
 
-The extracted runtime source imports only the public API facade. New
-`consumer-test/` suites exercise both packages without importing PRF
+The force-authorisation and held-custody runtime sources import only the public
+API facade. Their `consumer-test/` suites exercise both packages without importing PRF
 implementation namespaces. Both those suites and the broader package suites
 now pass against a temporary JJ workspace materialized at the exact pinned PRF
 staging commit `85983ba2766908d8c68792b090fcfafb378ea468`. This checks the
@@ -60,11 +62,14 @@ registry. See `../adapters/sew/README.md`.
   held-custody.
 - The extracted concept registry loaded as 3 bundles and 50 entries with root
   `sha256:55e1fade9ecaff4cc548b4bd491686f897c8f62c355038766d52ffc39cc60d5f`.
-- Package manifest validation passed for both packages. The package dependency
+- Package manifest validation passed for the original two packages. The package dependency
   composition and PRF runtime registry/resolver tests passed (5 tests, 10
   assertions), including successful resolution with force-authorisation and
   fail-closed resolution when that provider is absent or incompatible.
 - Public API boundary validation and `git diff --check` passed.
+- Repairability-report consumer tests passed (1 test / 3 assertions) and its
+  package tests passed (4 / 20). Three package manifests validated, and opt-in
+  runtime composition passed (6 tests / 13 assertions).
 - Against the exact staging-based API package candidate, the generator check
   and clean-room closure qualification passed. The extracted package suites
   passed using its local package root: force-authorisation consumer 2 tests / 6
@@ -85,7 +90,7 @@ Mutation and summary golden vectors remained unchanged.
 The original local checks used a temporary JJ workspace because this sandbox
 could not write the shared `~/.gitlibs` cache. The subsequent GitHub Actions
 run resolved the pinned PRF Git dependency from a clean checkout and passed
-both packages' consumer and test jobs. This establishes clean source resolution
+the force-authorisation and held-custody consumer and test jobs. This establishes clean source resolution
 for those commands, but not a separately released API artifact or independent
 qualification of the full dependency closure.
 
@@ -134,16 +139,18 @@ unset.
    repository remote is established; ownership and release authority remain
    separate governance facts.
 2. Independently review and stage API package candidate
-   `7de3ff05cf580f683d7cf2782255ca2ee41323d7`; then point both packages at its
-   subdirectory in the integrated immutable PRF revision.
-3. Independently verify package dependency closure and bind source/artifact
+   `7de3ff05cf580f683d7cf2782255ca2ee41323d7`; then point force-authorisation
+   and held-custody at its subdirectory in the integrated immutable PRF revision.
+3. Independently review the repairability-report package and run all three
+   packages through clean GitHub CI on the updated repository tree.
+4. Independently verify package dependency closure and bind source/artifact
    roots when there is a release artifact.
-4. Separate the Sew adapter's research/authority inputs behind public
+5. Separate the Sew adapter's research/authority inputs behind public
    contracts, then extract and qualify it.
-5. Re-run package-manifest validation in CI after the setup download issue;
+6. Re-run package-manifest validation in CI after the setup download issue;
    enable concept validation after the loader candidate is reviewed and
    fetchable, and retain qualification evidence.
-6. Update PRF to consume pinned bundles/packages only after the new roots and
+7. Update PRF to consume pinned bundles/packages only after the new roots and
    dependency closure are independently reviewed.
 
 The initial repository source has been pushed to the public `main` branch.

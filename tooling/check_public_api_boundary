@@ -12,4 +12,4 @@ if rg --pcre2 -n '\[resolver-sim\.' packages/*/consumer-test; then
   exit 1
 fi
 
-echo "Package source uses the public API facade; consumer tests import no PRF internals"
+echo "No package imports private PRF implementation namespaces; consumer tests use no PRF internals"

@@ -1,0 +1,32 @@
+{:manifest/schema :prf.extension-package.v1
+ :package/id :prf.extensions/repairability-report
+ :package/version "0.1.0"
+ :package/status :incubating
+ :package/api-compatibility {:api/id :prf-extension-api-v1 :versions [1]}
+ :package/capabilities
+ [{:capability/kind :report/section
+   :capability/id :repairability/report-v1
+   :capability/version 1
+   :capability/contract-version 1
+   :entrypoint prf.extensions.repairability-report.manifest/extension
+   :input-schema :prf/repairability-report-input.v1
+   :output-schema :prf/repairability-report-section.v1
+   :dependencies []}]
+ :package/dependencies []
+ :package/runtime-dependencies []
+ :package/license "Apache-2.0"
+ :package/maintainers []
+ :package/readiness
+ {:implementation :present
+  :tests :local-passing
+  :qualification :not-qualified
+  :deployment :none
+  :authorization :none}
+ :package/release
+ {:status :unpublished
+  :source-revision nil
+  :source-root nil
+  :artifact-root nil}
+ :package/limitations
+ ["Producer-supplied repair dimensions remain unverified assertions."
+  "Does not authenticate verifier output, authorize or execute repairs, or authorize publication."]}

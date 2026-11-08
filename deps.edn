@@ -4,6 +4,7 @@
  {:validate-packages
   {:extra-paths ["packages/force-authorisation/src"
                  "packages/held-custody/src"
+                 "packages/repairability-report/src"
                  "integration-tests"]
    :extra-deps {org.protocol-robustness/prf-core
                 {:git/url "https://github.com/protocol-robustness/protocol-robustness-framework.git"
@@ -13,6 +14,7 @@
   :composition-test
   {:extra-paths ["packages/force-authorisation/src"
                  "packages/held-custody/src"
+                 "packages/repairability-report/src"
                  "integration-tests"]
    :extra-deps {org.protocol-robustness/prf-core
                 {:git/url "https://github.com/protocol-robustness/protocol-robustness-framework.git"

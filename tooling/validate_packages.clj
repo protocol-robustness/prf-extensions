@@ -1,7 +1,8 @@
 (ns validate-packages
   (:require [clojure.edn :as edn]
             [prf.extensions.force-authorisation.manifest :as force-auth]
-            [prf.extensions.held-custody.manifest :as held-custody]))
+            [prf.extensions.held-custody.manifest :as held-custody]
+            [prf.extensions.repairability-report.manifest :as repairability-report]))
 
 (def package-configs
   [{:path "packages/force-authorisation/extension.edn"
@@ -9,7 +10,10 @@
     :runtime force-auth/package}
    {:path "packages/held-custody/extension.edn"
     :deps-path "packages/held-custody/deps.edn"
-    :runtime held-custody/package}])
+    :runtime held-custody/package}
+   {:path "packages/repairability-report/extension.edn"
+    :deps-path "packages/repairability-report/deps.edn"
+    :runtime repairability-report/package}])
 
 (defn- fail! [message data]
   (throw (ex-info message data)))
@@ -33,6 +37,18 @@
                 (into #{} (map dependency-key) (get capability dependency-field []))]))
         capabilities))
 
+(defn- runtime-dependencies [deps]
+  (dissoc (:deps deps) 'org.clojure/clojure))
+
+(defn- matches-runtime-dependency? [declaration [library dependency]]
+  (case (:source/type declaration)
+    :git (and (= (:source/repository declaration) (:git/url dependency))
+              (= (:source/revision declaration) (:git/sha dependency))
+              (= (:source/subdirectory declaration) (or (:deps/root dependency) ".")))
+    :maven (and (= (:source/library declaration) library)
+                (= (:source/version declaration) (:mvn/version dependency)))
+    false))
+
 (defn- validate-package! [{:keys [path deps-path runtime] :as config} packages]
   (let [manifest (read-edn path)
         deps (read-edn deps-path)
@@ -40,8 +56,8 @@
         runtime-capabilities (:extension/capabilities runtime)
         runtime-id (:extension/id runtime)
         runtime-version (:extension/version runtime)
-        core-dep (get-in deps [:deps 'org.protocol-robustness/prf-core])
-        core-pin (get-in manifest [:package/runtime-dependencies 0 :source/revision])
+        declared-dependencies (:package/runtime-dependencies manifest [])
+        source-dependencies (runtime-dependencies deps)
         declared-runtime-deps
         (capability-dependencies runtime-capabilities :declared-dependencies)
         manifest-runtime-deps
@@ -66,11 +82,16 @@
               :runtime (set (map capability-key runtime-capabilities))}))
     (when duplicate-capabilities?
       (fail! "Duplicate capability declaration" {:path path}))
-    (when-not (and (string? (:git/url core-dep))
-                   (= core-pin (:git/sha core-dep))
-                   (= "." (:deps/root core-dep)))
-      (fail! "Core API dependency pin differs between manifest and deps.edn"
-             {:path path :manifest-pin core-pin :deps-pin core-dep}))
+    (when-not (and (= (count declared-dependencies) (count source-dependencies))
+                   (every? (fn [declaration]
+                             (= 1 (count (filter #(matches-runtime-dependency?
+                                                   declaration %)
+                                                 source-dependencies))))
+                           declared-dependencies))
+      (fail! "Runtime dependencies differ between manifest and deps.edn"
+             {:path path
+              :manifest-dependencies declared-dependencies
+              :deps-runtime-dependencies source-dependencies}))
     (when-not (= declared-runtime-deps manifest-runtime-deps)
       (fail! "Runtime and data capability dependencies differ"
              {:path path :runtime declared-runtime-deps :manifest manifest-runtime-deps}))

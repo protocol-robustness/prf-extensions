@@ -23,7 +23,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        package: [force-authorisation, held-custody]
+        package: [force-authorisation, held-custody, repairability-report]
     steps:
       - uses: actions/checkout@v4
       - uses: DeLaGuardo/setup-clojure@12.5

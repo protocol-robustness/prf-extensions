@@ -10,12 +10,14 @@ version.
 - `packages/force-authorisation/` — protocol-neutral scoped authorisation
   verification.
 - `packages/held-custody/` — custody adjustment and admission contracts.
+- `packages/repairability-report/` — dependency-free, read-only report
+  projection that preserves producer claims as unverified.
 - `concepts/` — three declarative bundles, 50 concept entries, and their
   mappings.
 - `adapters/sew/` — reserved for Sew-specific adapters after their private
   PRF dependencies are separated behind public contracts.
 
-The two executable packages depend on the versioned
+Force-authorisation and held-custody depend on the versioned
 `resolver-sim.extensions.api.v1` facade from PRF core, pinned to source commit
 `85983ba2766908d8c68792b090fcfafb378ea468`. That source is not a published
 core artifact. The packages and bundle copies are incubating and are not
@@ -23,10 +25,14 @@ independently qualified releases. The source pin is reproducible, but its
 repository dependency closure is broader than a future standalone API
 artifact.
 
-Concept validation uses the loader from PRF commit
-`e4f9bae492c2a1dd29f771886ec08af69e52f9b6`; that commit is currently local to
-the PRF workspace. Clean-checkout concept validation remains blocked until
-that loader commit is available from the PRF remote.
+Repairability-report has no PRF-core dependency. It is opt-in and experimental;
+its output does not verify repair feasibility, grant execution authority, or
+authorize publication.
+
+Concept validation is implemented in PRF. The extraction candidate is PRF
+commit `874fedccd27d475ad5c0861c2dd894e3b3219042` on the staging base; it
+requires independent review and staging admission before the concept CI can
+resolve an immutable public revision.
 
 ## Validate
 
@@ -42,7 +48,7 @@ clojure -Srepro -M:composition-test
 Concept-root validation is local-only until the pinned PRF loader revision is
 available from its remote; it is not included in this repository's CI yet.
 
-From either package directory, run the independent consumer contract tests and
+From any package directory, run the independent consumer contract tests and
 the broader in-repository conformance tests:
 
 ```sh
@@ -61,4 +67,6 @@ copy. Their roots are new content identities. The old catalogue remains in
 PRF until an independently qualified pinned consumer migration is complete;
 historical references to the old roots must continue to resolve there.
 
-This repository currently has no configured remote or published artifacts.
+The public repository remote is configured and the initial source candidate is
+on `main`. No package artifact has been published and no package is qualified
+or deployed; see `docs/EXTRACTION_STATUS.md` for the current gates.

@@ -23,6 +23,8 @@ Include:
 
 - `force-authorisation`: protocol-neutral scope verification.
 - `held-custody`: simulation-level mutation/effect contracts.
+- `repairability-report`: dependency-free, read-only projection that preserves
+  repair and verification inputs as unverified producer assertions.
 - Three declarative concept bundles containing 50 current concept entries and
   mappings.
 - Package manifests, concept validation, dependency-boundary checks, and
@@ -32,6 +34,11 @@ Defer governed-authority, the Sew adapter, package publication, runtime
 integration into PRF, and any live authority or custody behavior. The Sew
 adapter remains in PRF while it imports private researcher, authority, or
 protocol-registry namespaces.
+
+The repairability report is not proof of repair feasibility, verifier
+correctness, execution authority, or publication approval. Its extracted
+package has no PRF-core runtime dependency, and remains opt-in, experimental,
+and unqualified.
 
 ## Work sequence and gates
 
@@ -57,7 +64,8 @@ protocol-registry namespaces.
 
 ### 3. Make package metadata auditable — implemented locally
 
-- Add `extension.edn` manifests for the extracted executable packages.
+- Add `extension.edn` manifests for the extracted executable packages,
+  including packages with no PRF-core dependency.
 - Check manifest identity, capability declarations, runtime dependencies, and
   package dependency providers against runtime manifests.
 - Keep source root and artifact root empty while unpublished. Release identity
@@ -107,7 +115,9 @@ protocol-registry namespaces.
 - The package API facade is unchanged at the pinned PRF staging revision
   `85983ba2766908d8c68792b090fcfafb378ea468`; package `deps.edn` pins that
   immutable revision.
-- Concept validation needs the loader at `e4f9bae492c2a1dd29f771886ec08af69e52f9b6`.
+- Concept validation's staging-based loader candidate is
+  `874fedccd27d475ad5c0861c2dd894e3b3219042`; it passed local validation but
+  still needs independent review and staging admission.
 - The old and extracted concept catalogue roots are different. Historical
   artifacts remain bound to their original root.
 

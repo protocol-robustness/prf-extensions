@@ -4,12 +4,14 @@
             [resolver-sim.extensions.registry :as registry]
             [resolver-sim.extensions.resolution :as resolution]
             [prf.extensions.force-authorisation.manifest :as force-auth]
-            [prf.extensions.held-custody.manifest :as held-custody]))
+            [prf.extensions.held-custody.manifest :as held-custody]
+            [prf.extensions.repairability-report.manifest :as repairability-report]))
 
 (def package-manifests
   (mapv (comp edn/read-string slurp)
         ["packages/force-authorisation/extension.edn"
-         "packages/held-custody/extension.edn"]))
+         "packages/held-custody/extension.edn"
+         "packages/repairability-report/extension.edn"]))
 
 (defn package-providers [manifests]
   (into {} (map (juxt :package/id identity)) manifests))
@@ -102,3 +104,17 @@
     (is (some #(= :extensions/error-incompatible-contract-version
                   (:violation/id %))
               (:violations result)))))
+
+(deftest repairability-report-is-an-independent-opt-in-capability
+  (let [extension-map (register-packages [repairability-report/package])
+        result (resolution/resolve-requested
+                extension-map
+                [[:report/section :repairability/report-v1]]
+                {:schemas (schema-roots extension-map)})]
+    (is (:valid? result) (pr-str (:violations result)))
+    (is (empty? (:package/dependencies
+                 (edn/read-string
+                  (slurp "packages/repairability-report/extension.edn"))))
+        "the report package has no implicit package provider dependency")
+    (is (contains? (get-in result [:resolution :extensions/capabilities])
+                   [:report/section :repairability/report-v1]))))
