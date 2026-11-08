@@ -26,6 +26,13 @@
    (select-keys (:requirement dependency)
                 [:capability/version :capability/contract-version :capability/profile])])
 
+(defn- capability-dependencies [capabilities dependency-field]
+  (into {}
+        (map (fn [capability]
+               [(capability-key capability)
+                (into #{} (map dependency-key) (get capability dependency-field []))]))
+        capabilities))
+
 (defn- validate-package! [{:keys [path deps-path runtime] :as config} packages]
   (let [manifest (read-edn path)
         deps (read-edn deps-path)
@@ -36,11 +43,9 @@
         core-dep (get-in deps [:deps 'org.protocol-robustness/prf-core])
         core-pin (get-in manifest [:package/runtime-dependencies 0 :source/revision])
         declared-runtime-deps
-        (into #{} (map dependency-key)
-              (:declared-dependencies (first runtime-capabilities)))
+        (capability-dependencies runtime-capabilities :declared-dependencies)
         manifest-runtime-deps
-        (into #{} (map dependency-key)
-              (:dependencies (first capabilities)))
+        (capability-dependencies capabilities :dependencies)
         duplicate-capabilities? (not= (count capabilities)
                                        (count (set (map capability-key capabilities))))]
     (when-not (= :prf.extension-package.v1 (:manifest/schema manifest))
