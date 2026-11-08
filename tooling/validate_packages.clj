@@ -49,6 +49,20 @@
                 (= (:source/version declaration) (:mvn/version dependency)))
     false))
 
+(defn runtime-dependencies-consistent?
+  "True when manifest declarations and deps.edn entries match one-to-one."
+  [declared-dependencies source-dependencies]
+  (and (= (count declared-dependencies) (count source-dependencies))
+       (every? (fn [declaration]
+                 (= 1 (count (filter #(matches-runtime-dependency? declaration %)
+                                     source-dependencies))))
+               declared-dependencies)
+       (every? (fn [source-dependency]
+                 (= 1 (count (filter #(matches-runtime-dependency?
+                                       % source-dependency)
+                                     declared-dependencies))))
+               source-dependencies)))
+
 (defn- validate-package! [{:keys [path deps-path runtime] :as config} packages]
   (let [manifest (read-edn path)
         deps (read-edn deps-path)
@@ -82,17 +96,8 @@
               :runtime (set (map capability-key runtime-capabilities))}))
     (when duplicate-capabilities?
       (fail! "Duplicate capability declaration" {:path path}))
-    (when-not (and (= (count declared-dependencies) (count source-dependencies))
-                   (every? (fn [declaration]
-                             (= 1 (count (filter #(matches-runtime-dependency?
-                                                   declaration %)
-                                                 source-dependencies))))
-                           declared-dependencies)
-                   (every? (fn [source-dependency]
-                             (= 1 (count (filter #(matches-runtime-dependency?
-                                                   % source-dependency)
-                                                 declared-dependencies))))
-                           source-dependencies))
+    (when-not (runtime-dependencies-consistent? declared-dependencies
+                                                source-dependencies)
       (fail! "Runtime dependencies differ between manifest and deps.edn"
              {:path path
               :manifest-dependencies declared-dependencies
