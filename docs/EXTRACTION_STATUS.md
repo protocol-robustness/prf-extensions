@@ -37,17 +37,24 @@ revision is integrated and fetchable, these package manifests continue to pin
 the broader PRF root.
 
 The force-authorisation and held-custody runtime sources import only the public
-API facade. Their `consumer-test/` suites exercise both packages without importing PRF
-implementation namespaces. Both those suites and the broader package suites
-now pass against a temporary JJ workspace materialized at the exact pinned PRF
-staging commit `85983ba2766908d8c68792b090fcfafb378ea468`. This checks the
-declared source revision. In GitHub Actions run `42469160581`, both package
-clean-checkout consumer and package-test jobs also passed while resolving the
-pinned PRF Git dependency. The broader copied conformance suites import PRF
-implementation namespaces and remain integration tests, not clean consumer
-tests. Clean external resolution is demonstrated; independent dependency
-closure verification remains pending because the pinned dependency is the full
-PRF repository rather than a narrow API artifact.
+API facade. Their `consumer-test/` suites exercise both packages without
+importing PRF implementation namespaces. The current local candidate's tests
+were run with `GITLIBS=/tmp/prf-ext-gitlibs`, an empty writable cache that
+fetched the exact immutable dependencies declared by each package:
+
+- Force-authorisation: consumer tests 2 / 6 assertions; package tests 3 / 11.
+- Held-custody: consumer tests 3 / 12 assertions; package tests 102 / 587.
+- Repairability-report: consumer tests 1 / 3 assertions; package tests 4 / 20.
+- Manifest validation: 3 packages valid.
+- Composition and adversarial dependency declaration tests: 7 / 19.
+- Public API boundary check: passed.
+
+The broader copied conformance suites import PRF implementation namespaces and
+remain integration tests, not clean consumer tests. Clean external source
+resolution is demonstrated for the pinned source revision; independent
+dependency-closure qualification remains pending because the packages still
+depend on the full PRF repository rather than a narrow API artifact. The
+current candidate has not run through GitHub Actions.
 
 The package `:test` aliases now invoke explicit test runners. Before this fix,
 the documented command opened a REPL and did not run the suite.
