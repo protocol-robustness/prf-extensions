@@ -2,14 +2,16 @@
 
 Status: **incubating public source repository; not released or independently
 qualified**. The repository remote is configured and the initial source
-candidate has been pushed to `main`. This is source publication, not package
-release, qualification, or deployment.
+candidate is on `main`. This is source publication, not package release,
+qualification, or deployment.
 
-The latest local source candidate is commit
+The latest package-code commit is
 `7513002ef6d74343b9c6d16978e3893decbc7067`, tree
-`7fc83d8d924761b0a44a3cdbb262caa6edef2f79`. The user reports pushing the
-updated extraction, but this environment could not reach GitHub to confirm the
-remote tip or CI state.
+`7fc83d8d924761b0a44a3cdbb262caa6edef2f79`. A documentation-only commit
+`485119c3d4765e0fcfd993cd27368892fca7a261` follows it. Both are local and
+not present on the remote. GitHub currently exposes only `main`, whose status
+document predates the repairability package; fetching commit `7513002` returned
+no commit. The newer candidate has not been pushed or run through remote CI.
 
 ## Included
 
