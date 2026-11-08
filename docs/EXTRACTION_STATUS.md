@@ -5,6 +5,12 @@ qualified**. The repository remote is configured and the initial source
 candidate has been pushed to `main`. This is source publication, not package
 release, qualification, or deployment.
 
+The latest local source candidate is commit
+`7513002ef6d74343b9c6d16978e3893decbc7067`, tree
+`7fc83d8d924761b0a44a3cdbb262caa6edef2f79`. The user reports pushing the
+updated extraction, but this environment could not reach GitHub to confirm the
+remote tip or CI state.
+
 ## Included
 
 - `packages/force-authorisation/` and its tests.
