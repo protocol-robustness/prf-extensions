@@ -1,0 +1,37 @@
+{:manifest/schema :prf.extension-package.v1
+ :package/id :prf.extensions/force-authorisation
+ :package/version "0.2.0"
+ :package/status :incubating
+ :package/api-compatibility {:api/id :prf-extension-api-v1 :versions [1]}
+ :package/capabilities
+ [{:capability/kind :prf/force-authorisation
+   :capability/id :force-authorisation/scope-verification
+   :capability/version 1
+   :capability/contract-version 1
+   :entrypoint prf.extensions.force-authorisation.manifest/scope-verification
+   :input-schema :prf/force-authorisation-scope.v1
+   :output-schema :prf/force-authorisation-scope-verification.v1}]
+ :package/dependencies []
+ :package/runtime-dependencies
+ [{:dependency/id :prf.core
+   :source/type :git
+   :source/repository "https://github.com/protocol-robustness/protocol-robustness-framework.git"
+   :source/revision "85983ba2766908d8c68792b090fcfafb378ea468"
+   :source/subdirectory "."
+   :dependency/purpose :prf-extension-api-v1}]
+ :package/license "Apache-2.0"
+ :package/maintainers ["PRF core"]
+ :package/readiness
+ {:implementation :present
+  :tests :local-passing
+  :qualification :not-qualified
+  :deployment :none
+  :authorization :none}
+ :package/release
+ {:status :unpublished
+  :source-revision nil
+  :source-root nil
+  :artifact-root nil}
+ :package/limitations
+ ["Protocol-neutral scope verification only."
+  "Does not issue a governance permit or authorize Sew custody execution."]}

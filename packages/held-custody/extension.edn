@@ -1,0 +1,55 @@
+{:manifest/schema :prf.extension-package.v1
+ :package/id :prf.extensions/held-custody
+ :package/version "0.1.0"
+ :package/status :incubating
+ :package/api-compatibility {:api/id :prf-extension-api-v1 :versions [1]}
+ :package/capabilities
+ [{:capability/kind :force-authorisation/effect-evidence
+   :capability/id :held-custody/mutation
+   :capability/version 1
+   :capability/contract-version 1
+   :entrypoint prf.extensions.held-custody.manifest/extension
+   :input-schema :prf/force-authorised-held-mutation-input.v1
+   :output-schema :prf/force-authorised-held-mutation-artifact.v1
+   :dependencies
+   [{:capability/kind :prf/content-addressed-artifacts
+     :capability/id :prf/envelope}
+    {:package/id :prf.extensions/force-authorisation
+     :capability/kind :prf/force-authorisation
+     :capability/id :force-authorisation/scope-verification
+     :capability/version 1}]}
+  {:capability/kind :assurance/force-authorisation
+   :capability/id :held-custody/override-admission-v1
+   :capability/version 1
+   :capability/contract-version 1
+   :entrypoint prf.extensions.held-custody.semantic-admission/override-admission
+   :input-schema :prf/held-custody-override-admission-input.v1
+   :output-schema :prf/held-custody-override-admission-result.v1
+   :dependencies []}]
+ :package/dependencies
+ [{:package/id :prf.extensions/force-authorisation
+   :capability/id :force-authorisation/scope-verification
+   :capability/version 1}]
+ :package/runtime-dependencies
+ [{:dependency/id :prf.core
+   :source/type :git
+   :source/repository "https://github.com/protocol-robustness/protocol-robustness-framework.git"
+   :source/revision "85983ba2766908d8c68792b090fcfafb378ea468"
+   :source/subdirectory "."
+   :dependency/purpose :prf-extension-api-v1}]
+ :package/license "Apache-2.0"
+ :package/maintainers ["PRF core"]
+ :package/readiness
+ {:implementation :present
+  :tests :local-passing
+  :qualification :not-qualified
+  :deployment :none
+  :authorization :none}
+ :package/release
+ {:status :unpublished
+  :source-revision nil
+  :source-root nil
+  :artifact-root nil}
+ :package/limitations
+ ["Local and simulation evidence only; no live custody authority."
+  "Sew integration remains a separately qualified adapter."]}

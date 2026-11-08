@@ -34,6 +34,8 @@ From the repository root (the pinned PRF loader revision must be fetchable):
 
 ```sh
 clojure -Srepro -M:validate-concepts
+clojure -Srepro -M:validate-packages
+clojure -Srepro -M:composition-test
 ./tooling/check_public_api_boundary
 ```
 

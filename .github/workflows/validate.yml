@@ -8,6 +8,16 @@ permissions:
   contents: read
 
 jobs:
+  package-manifests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: DeLaGuardo/setup-clojure@12.5
+        with:
+          cli: 1.11.1.1435
+      - name: Validate package manifests against runtime contracts
+        run: clojure -Srepro -M:validate-packages
+
   executable-packages:
     runs-on: ubuntu-latest
     strategy:
@@ -31,3 +41,13 @@ jobs:
       - uses: actions/checkout@v4
       - name: Check executable package imports
         run: ./tooling/check_public_api_boundary
+
+  composition:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: DeLaGuardo/setup-clojure@12.5
+        with:
+          cli: 1.11.1.1435
+      - name: Check declared extension composition
+        run: clojure -Srepro -M:composition-test

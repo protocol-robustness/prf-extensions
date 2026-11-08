@@ -8,6 +8,8 @@ qualified**.
 - `packages/force-authorisation/` and its tests.
 - `packages/held-custody/` and its tests.
 - Three concept bundles, 50 concept entries, and their mappings.
+- Declarative `prf.extension-package.v1` manifests with runtime consistency
+  validation.
 - Runtime package source copied from PRF revision
   `e4f9bae492c2a1dd29f771886ec08af69e52f9b6`; the pinned API commit is its
   ancestor and the API facade has no diff between those revisions.
@@ -41,6 +43,9 @@ registry. See `../adapters/sew/README.md`.
   source override: 102 tests, 587 assertions.
 - The extracted concept registry loaded as 3 bundles and 50 entries with root
   `sha256:55e1fade9ecaff4cc548b4bd491686f897c8f62c355038766d52ffc39cc60d5f`.
+- Package manifests and a composition test are now in the working candidate.
+  Their final validation is pending; these are not included in the earlier
+  test results above.
 
 These checks do not establish an independently fetched Git dependency or a
 qualified release. Attempting the pinned Git consumer from this sandbox was
@@ -75,12 +80,12 @@ publication, or a claim of root equivalence.
    point both packages at it.
 3. Run clean-checkout package tests against the pinned dependency without a
    local-root override.
-4. Define and validate package manifests, dependency closure, and package
-   source/artifact roots.
+4. Independently verify package dependency closure and bind source/artifact
+   roots when there is a release artifact.
 5. Separate the Sew adapter's research/authority inputs behind public
    contracts, then extract and qualify it.
-6. Add concept validation and composition tests to CI, then retain release
-   evidence.
+6. Run the new manifest and composition checks in CI, enable concept validation
+   after the pinned loader is fetchable, and retain qualification evidence.
 7. Update PRF to consume pinned bundles/packages only after the new roots and
    dependency closure are independently reviewed.
 
