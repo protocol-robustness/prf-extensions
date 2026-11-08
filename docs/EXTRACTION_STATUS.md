@@ -73,6 +73,23 @@ consumer migration is separately reviewed.
 This is a local descriptive migration record, not signed provenance, approval,
 publication, or a claim of root equivalence.
 
+## Candidate source identities
+
+At candidate commit
+`64b0b50d800ed06d3e54fa20e2228dd5faa69cec` (repository tree
+`53182b4512500c41bcd3fde570ed54c614769c20`), the Git subtree identities are:
+
+| Path | Git tree ID |
+|---|---|
+| `packages/force-authorisation/` | `a496b7d5cc831c3ab0c7aabef26fb7e9c43c5885` |
+| `packages/held-custody/` | `4145e10c334a698ade4142a66f1c0f0c9fa38738` |
+| `concepts/` | `d78360844b22b066ca55e53d45b4db8635edccc3` |
+
+These Git object IDs identify the candidate source directories. They are not
+published artifact hashes, dependency-closure roots, independent qualification,
+or release identities. The package manifests correctly leave release roots
+unset.
+
 ## Remaining release gates
 
 1. Establish the repository remote and owners through the authorized workflow.
