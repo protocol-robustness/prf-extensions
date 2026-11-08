@@ -42,7 +42,9 @@
                          :cardinality :one}}
    :declared-dependencies
    [{:capability/kind :prf/force-authorisation
-     :capability/id :force-authorisation/scope-verification}]})
+     :capability/id :force-authorisation/scope-verification
+     :requirement {:capability/version 1
+                   :capability/contract-version 1}}]})
 
 (def override-admission-capability
   "Declared, versioned capability for the exceptional held-custody override

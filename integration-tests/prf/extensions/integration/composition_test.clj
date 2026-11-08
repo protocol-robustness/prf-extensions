@@ -22,13 +22,18 @@
                             (let [id (:package/id dependency)
                                   capability-id (:capability/id dependency)
                                   capability-version (:capability/version dependency)
+                                  capability-contract-version
+                                  (:capability/contract-version dependency)
                                   provider (get providers id)
                                   provides? (some #(and (= capability-id (:capability/id %))
                                                         (= capability-version
-                                                           (:capability/version %)))
+                                                           (:capability/version %))
+                                                        (= capability-contract-version
+                                                           (:capability/contract-version %)))
                                                   (:package/capabilities provider))]
                               (when-not provides?
-                                [id capability-id capability-version])))
+                                [id capability-id capability-version
+                                 capability-contract-version])))
                           (:package/dependencies manifest)))
           manifests))))
 
@@ -67,7 +72,7 @@
 (deftest absent-force-authorisation-provider-is-detectable
   (let [required-provider [:prf.extensions/force-authorisation
                            :force-authorisation/scope-verification
-                           1]]
+                           1 1]]
     (is (= #{required-provider}
            (missing-package-dependencies
             [(second package-manifests)])))))
@@ -86,4 +91,14 @@
                     (= [:prf/force-authorisation
                         :force-authorisation/scope-verification]
                        (get-in % [:details :capability])))
+              (:violations result)))))
+
+(deftest runtime-resolver-rejects-incompatible-provider-version
+  (let [incompatible-provider
+        (update-in force-auth/package [:extension/capabilities 0]
+                   assoc :capability/version 2)
+        result (resolve-held-custody [incompatible-provider held-custody/package])]
+    (is (false? (:valid? result)))
+    (is (some #(= :extensions/error-incompatible-contract-version
+                  (:violation/id %))
               (:violations result)))))

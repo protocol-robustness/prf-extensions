@@ -15,7 +15,10 @@
    [{:package/id :prf.extensions/force-authorisation
      :capability/kind :prf/force-authorisation
      :capability/id :force-authorisation/scope-verification
-     :capability/version 1}]}
+     :capability/version 1
+     :capability/contract-version 1
+     :requirement {:capability/version 1
+                   :capability/contract-version 1}}]}
   {:capability/kind :assurance/force-authorisation
    :capability/id :held-custody/override-admission-v1
    :capability/version 1
@@ -27,7 +30,8 @@
  :package/dependencies
  [{:package/id :prf.extensions/force-authorisation
    :capability/id :force-authorisation/scope-verification
-   :capability/version 1}]
+   :capability/version 1
+   :capability/contract-version 1}]
  :package/runtime-dependencies
  [{:dependency/id :prf.core
    :source/type :git

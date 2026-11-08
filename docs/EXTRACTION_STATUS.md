@@ -51,17 +51,20 @@ registry. See `../adapters/sew/README.md`.
 - The extracted concept registry loaded as 3 bundles and 50 entries with root
   `sha256:55e1fade9ecaff4cc548b4bd491686f897c8f62c355038766d52ffc39cc60d5f`.
 - Package manifest validation passed for both packages. The package dependency
-  composition and PRF runtime registry/resolver tests passed (4 tests, 8
+  composition and PRF runtime registry/resolver tests passed (5 tests, 10
   assertions), including successful resolution with force-authorisation and
-  fail-closed resolution when that provider is absent.
+  fail-closed resolution when that provider is absent or incompatible.
 - Public API boundary validation and `git diff --check` passed.
 
 The runtime composition test exposed and removed a stale held-custody dependency
 on a `:prf/envelope` capability that PRF core does not register. Artifact
 enveloping is provided by functions in the versioned API facade; the package
 does not need an additional runtime capability for that service. The package
-and capability roots changed accordingly and the held-custody golden root
-fixtures were updated. Mutation and summary golden vectors remained unchanged.
+now pins both the force-authorisation capability version and contract version.
+Static and runtime declarations are cross-checked, and the runtime resolver test
+rejects missing or incompatible providers. The package and capability roots
+changed accordingly and the held-custody golden root fixtures were updated.
+Mutation and summary golden vectors remained unchanged.
 
 These checks do not establish a cleanly fetched Git dependency or a qualified
 release. The ordinary Git dependency attempt cannot write the shared

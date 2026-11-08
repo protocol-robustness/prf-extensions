@@ -20,6 +20,12 @@
 (defn- capability-key [{:capability/keys [kind id version]}]
   [kind id version])
 
+(defn- dependency-key [dependency]
+  [(:capability/kind dependency)
+   (:capability/id dependency)
+   (select-keys (:requirement dependency)
+                [:capability/version :capability/contract-version :capability/profile])])
+
 (defn- validate-package! [{:keys [path deps-path runtime] :as config} packages]
   (let [manifest (read-edn path)
         deps (read-edn deps-path)
@@ -30,10 +36,10 @@
         core-dep (get-in deps [:deps 'org.protocol-robustness/prf-core])
         core-pin (get-in manifest [:package/runtime-dependencies 0 :source/revision])
         declared-runtime-deps
-        (into #{} (map (fn [d] [(:capability/kind d) (:capability/id d)]))
+        (into #{} (map dependency-key)
               (:declared-dependencies (first runtime-capabilities)))
         manifest-runtime-deps
-        (into #{} (map (fn [d] [(:capability/kind d) (:capability/id d)]))
+        (into #{} (map dependency-key)
               (:dependencies (first capabilities)))
         duplicate-capabilities? (not= (count capabilities)
                                        (count (set (map capability-key capabilities))))]
@@ -70,11 +76,14 @@
       (fail! "Unpublished package claims a release identity" {:path path}))
     (doseq [{package-id :package/id
              capability-id :capability/id
-             capability-version :capability/version}
+             capability-version :capability/version
+             capability-contract-version :capability/contract-version}
             (:package/dependencies manifest)]
       (let [provider (get packages package-id)
             provided? (some #(and (= capability-id (:capability/id %))
-                                  (= capability-version (:capability/version %)))
+                                  (= capability-version (:capability/version %))
+                                  (= capability-contract-version
+                                     (:capability/contract-version %)))
                             (:package/capabilities provider))]
         (when-not provided?
           (fail! "Declared package capability dependency has no provider"
