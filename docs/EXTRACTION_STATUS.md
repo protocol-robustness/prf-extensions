@@ -18,9 +18,13 @@ release, qualification, or deployment.
 
 The executable packages import the versioned `resolver-sim.extensions.api.v1`
 facade and pin PRF core source to staging commit
-`85983ba2766908d8c68792b090fcfafb378ea468`. This commit is immutable, but the
-API has no standalone published artifact. The full PRF repository remains a
-broader dependency than the desired API package.
+`85983ba2766908d8c68792b090fcfafb378ea468`. A narrow API source package
+candidate is prepared in PRF commit
+`7de3ff05cf580f683d7cf2782255ca2ee41323d7`, based on that same staging tip. It
+contains a generated 25-namespace closure and a `deps.edn` subdirectory
+contract. It is pending independent review and staging admission. Until that
+revision is integrated and fetchable, these package manifests continue to pin
+the broader PRF root.
 
 The extracted runtime source imports only the public API facade. New
 `consumer-test/` suites exercise both packages without importing PRF
@@ -44,8 +48,9 @@ registry. See `../adapters/sew/README.md`.
 
 ## Verification performed
 
-- The original PRF API-closure qualification script passed: 105 tests, 603
-  assertions, source closure `sha256:ed63122aa5dd54274926dde94f8657fbcef04d825ffaa95aff0dd6ca70d30cf2`.
+- The earlier source-only API-closure record listed 105 tests / 603 assertions.
+  The package-shaped rerun now passes 105 tests / 598 assertions against source
+  closure `sha256:ed63122aa5dd54274926dde94f8657fbcef04d825ffaa95aff0dd6ca70d30cf2`.
 - Extracted force-authorisation package tests passed against the current local
   exact pinned PRF staging source: 3 tests, 11 assertions.
 - Extracted held-custody package tests passed against the current local PRF
@@ -60,6 +65,12 @@ registry. See `../adapters/sew/README.md`.
   assertions), including successful resolution with force-authorisation and
   fail-closed resolution when that provider is absent or incompatible.
 - Public API boundary validation and `git diff --check` passed.
+- Against the exact staging-based API package candidate, the generator check
+  and clean-room closure qualification passed. The extracted package suites
+  passed using its local package root: force-authorisation consumer 2 tests / 6
+  assertions and package 3 / 11; held-custody consumer 3 / 12 and package 102 /
+  587. Manifest validation returned `:valid` for two packages, and composition
+  passed 5 tests / 10 assertions.
 
 The runtime composition test exposed and removed a stale held-custody dependency
 on a `:prf/envelope` capability that PRF core does not register. Artifact
@@ -71,11 +82,12 @@ rejects missing or incompatible providers. The package and capability roots
 changed accordingly and the held-custody golden root fixtures were updated.
 Mutation and summary golden vectors remained unchanged.
 
-These checks do not establish a cleanly fetched Git dependency or a qualified
-release. The ordinary Git dependency attempt cannot write the shared
-`~/.gitlibs` cache in this sandbox. Instead, the exact pinned commit was
-materialized as a temporary local JJ workspace and passed as a local-root
-override; committed package manifests retain the immutable staging source pin.
+The original local checks used a temporary JJ workspace because this sandbox
+could not write the shared `~/.gitlibs` cache. The subsequent GitHub Actions
+run resolved the pinned PRF Git dependency from a clean checkout and passed
+both packages' consumer and test jobs. This establishes clean source resolution
+for those commands, but not a separately released API artifact or independent
+qualification of the full dependency closure.
 
 The concept-validation workflow uses the bundle loader from PRF commit
 `e4f9bae492c2a1dd29f771886ec08af69e52f9b6`, which is not yet available from
@@ -119,15 +131,16 @@ unset.
 1. Record and verify repository ownership/release responsibility. The public
    repository remote is established; ownership and release authority remain
    separate governance facts.
-2. Publish or independently qualify a narrow immutable PRF API artifact and
-   point both packages at it.
+2. Independently review and stage API package candidate
+   `7de3ff05cf580f683d7cf2782255ca2ee41323d7`; then point both packages at its
+   subdirectory in the integrated immutable PRF revision.
 3. Independently verify package dependency closure and bind source/artifact
    roots when there is a release artifact.
 4. Separate the Sew adapter's research/authority inputs behind public
    contracts, then extract and qualify it.
 5. Re-run package-manifest validation in CI after the setup download issue;
-   enable concept validation
-   after the pinned loader is fetchable, and retain qualification evidence.
+   enable concept validation after the loader candidate is reviewed and
+   fetchable, and retain qualification evidence.
 6. Update PRF to consume pinned bundles/packages only after the new roots and
    dependency closure are independently reviewed.
 
