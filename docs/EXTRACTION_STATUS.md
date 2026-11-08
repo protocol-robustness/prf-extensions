@@ -135,6 +135,7 @@ no independent qualification or deployment is claimed. For GitHub Actions run
 `42469160581` on `188d10760f113b7da715000947ebcf1674a6cdf4`, force-authorisation,
 held-custody, composition, and dependency-boundary jobs passed. The
 package-manifest job remains unqualified because `setup-clojure` failed to
-download its toolchain after retries; rerun that job when the download service
-is available. Concept validation is not part of this run until its pinned PRF
-loader revision is integrated and fetchable.
+download its toolchain after retries. The exact manifest command passed locally
+against the same pinned PRF source (`:valid`, 2 packages), but rerun the CI job
+when its setup download service is available. Concept validation is not part of
+this run until its pinned PRF loader revision is integrated and fetchable.
