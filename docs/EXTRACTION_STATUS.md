@@ -22,12 +22,16 @@ broader dependency than the desired API package.
 
 The extracted runtime source imports only the public API facade. New
 `consumer-test/` suites exercise both packages without importing PRF
-implementation namespaces; their current local-override runs passed (2 tests,
-6 assertions for force-authorisation; 3 tests, 12 assertions for held-custody).
-The broader copied conformance suites still import PRF implementation
-namespaces and remain integration tests, not clean consumer tests. The direct
-consumer tests have not yet run against a cleanly fetched immutable core
-dependency, so Q1 remains pending.
+implementation namespaces. Both those suites and the broader package suites
+now pass against a temporary JJ workspace materialized at the exact pinned PRF
+staging commit `85983ba2766908d8c68792b090fcfafb378ea468`. This checks the
+declared source revision, but it is still a local-root override rather than a
+clean Git dependency fetch. The broader copied conformance suites import PRF
+implementation namespaces and remain integration tests, not clean consumer
+tests. Q1 remains pending until clean external dependency resolution passes.
+
+The package `:test` aliases now invoke explicit test runners. Before this fix,
+the documented command opened a REPL and did not run the suite.
 
 The Sew-specific force-authorisation adapter was not extracted: it currently
 imports researcher and authority implementation namespaces plus the protocol
@@ -38,20 +42,24 @@ registry. See `../adapters/sew/README.md`.
 - The original PRF API-closure qualification script passed: 105 tests, 603
   assertions, source closure `sha256:ed63122aa5dd54274926dde94f8657fbcef04d825ffaa95aff0dd6ca70d30cf2`.
 - Extracted force-authorisation package tests passed against the current local
-  PRF source override: 3 tests, 11 assertions.
+  exact pinned PRF staging source: 3 tests, 11 assertions.
 - Extracted held-custody package tests passed against the current local PRF
-  source override: 102 tests, 587 assertions.
+  exact pinned PRF staging source: 102 tests, 587 assertions.
+- Independent consumer tests passed against the same pinned PRF source: 2
+  tests / 6 assertions for force-authorisation and 3 tests / 12 assertions for
+  held-custody.
 - The extracted concept registry loaded as 3 bundles and 50 entries with root
   `sha256:55e1fade9ecaff4cc548b4bd491686f897c8f62c355038766d52ffc39cc60d5f`.
-- Package manifests and a composition test are now in the working candidate.
-  Their final validation is pending; these are not included in the earlier
-  test results above.
+- Package manifest validation passed for both packages. The package dependency
+  composition test passed (2 tests, 4 assertions), including detection of the
+  missing force-authorisation provider.
+- Public API boundary validation and `git diff --check` passed.
 
-These checks do not establish an independently fetched Git dependency or a
-qualified release. Attempting the pinned Git consumer from this sandbox was
-blocked because Clojure could not write the shared `~/.gitlibs` cache. Package
-tests therefore used a temporary local-root override; the committed package
-manifests retain the immutable staging source pin.
+These checks do not establish a cleanly fetched Git dependency or a qualified
+release. The ordinary Git dependency attempt cannot write the shared
+`~/.gitlibs` cache in this sandbox. Instead, the exact pinned commit was
+materialized as a temporary local JJ workspace and passed as a local-root
+override; committed package manifests retain the immutable staging source pin.
 
 The concept-validation workflow uses the bundle loader from PRF commit
 `e4f9bae492c2a1dd29f771886ec08af69e52f9b6`, which is not yet available from
