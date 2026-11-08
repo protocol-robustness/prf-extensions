@@ -29,6 +29,7 @@ From the repository root:
 
 ```sh
 clojure -Srepro -M:validate-concepts
+./tooling/check_public_api_boundary
 ```
 
 From either package directory:

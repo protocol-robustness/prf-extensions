@@ -32,3 +32,10 @@ jobs:
       - name: Test package
         working-directory: packages/${{ matrix.package }}
         run: clojure -Srepro -M:test
+
+  dependency-boundary:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check executable package imports
+        run: ./tooling/check_public_api_boundary
