@@ -25,17 +25,20 @@ artifact.
 
 Concept validation uses the loader from PRF commit
 `e4f9bae492c2a1dd29f771886ec08af69e52f9b6`; that commit is currently local to
-the PRF workspace. The validation workflow becomes runnable from a clean
-GitHub checkout after the PRF loader commit is available from the remote.
+the PRF workspace. Clean-checkout concept validation remains blocked until
+that loader commit is available from the PRF remote.
 
 ## Validate
 
-From the repository root:
+From the repository root (the pinned PRF loader revision must be fetchable):
 
 ```sh
 clojure -Srepro -M:validate-concepts
 ./tooling/check_public_api_boundary
 ```
+
+Concept-root validation is local-only until the pinned PRF loader revision is
+available from its remote; it is not included in this repository's CI yet.
 
 From either package directory:
 
