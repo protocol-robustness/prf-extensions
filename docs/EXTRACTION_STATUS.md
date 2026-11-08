@@ -89,12 +89,14 @@ both packages' consumer and test jobs. This establishes clean source resolution
 for those commands, but not a separately released API artifact or independent
 qualification of the full dependency closure.
 
-The concept-validation workflow uses the bundle loader from PRF commit
-`e4f9bae492c2a1dd29f771886ec08af69e52f9b6`, which is not yet available from
-the PRF remote. Its validation passed locally with a local-root override; the
-GitHub workflow therefore does not yet run concept validation. The root
-command is available for local validation and can be enabled in CI after that
-exact loader revision is integrated and fetchable from PRF's remote.
+The concept-validation workflow is isolated as PRF candidate
+`874fedccd27d475ad5c0861c2dd894e3b3219042` (tree
+`d887f16fa2696db1d20108c3bda8827cdd636a37`), based on the exact staging tip.
+Its loader tests and validation passed locally, producing 3 bundles / 50
+concepts at root
+`sha256:9eb69055afd35550de15621265647173888a083ccabaecb8fc24737a35b52733`.
+The candidate still requires independent review and staging admission before
+CI can fetch it; the concept-validation job is not yet enabled in GitHub.
 
 ## Concept identity migration
 
