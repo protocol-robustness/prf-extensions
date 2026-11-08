@@ -5,13 +5,13 @@ qualified**. The repository remote is configured and the initial source
 candidate is on `main`. This is source publication, not package release,
 qualification, or deployment.
 
-The latest package-code commit is
-`7513002ef6d74343b9c6d16978e3893decbc7067`, tree
-`7fc83d8d924761b0a44a3cdbb262caa6edef2f79`. A documentation-only commit
-`485119c3d4765e0fcfd993cd27368892fca7a261` follows it. Both are local and
-not present on the remote. GitHub currently exposes only `main`, whose status
-document predates the repairability package; fetching commit `7513002` returned
-no commit. The newer candidate has not been pushed or run through remote CI.
+The current local candidate branch is
+`agent-c-2-extension-extraction-20261108`, at commit
+`0335ee452053967612a4aef68ddb1563f18a6a8e`, tree
+`7f49df6fe60699b57194bb83f986d23218dfa3f4`. It includes package code and an
+adversarial dependency-manifest regression test. GitHub currently exposes only
+`main` at `188d10760f113b7da715000947ebcf1674a6cdf4`; the candidate branch has
+not been pushed or run through remote CI.
 
 ## Included
 
@@ -78,6 +78,10 @@ registry. See `../adapters/sew/README.md`.
 - Repairability-report consumer tests passed (1 test / 3 assertions) and its
   package tests passed (4 / 20). Three package manifests validated, and opt-in
   runtime composition passed (6 tests / 13 assertions).
+- The current manifest/composition checks pass with three valid package
+  manifests. The composition runner now also runs adversarial one-to-one
+  runtime dependency declaration tests: 7 tests / 19 assertions. Public API
+  boundary validation and `git diff --check` pass.
 - Against the exact staging-based API package candidate, the generator check
   and clean-room closure qualification passed. The extracted package suites
   passed using its local package root: force-authorisation consumer 2 tests / 6
