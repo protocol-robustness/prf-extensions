@@ -40,9 +40,11 @@ clojure -Srepro -M:validate-concepts
 Concept-root validation is local-only until the pinned PRF loader revision is
 available from its remote; it is not included in this repository's CI yet.
 
-From either package directory:
+From either package directory, run the independent consumer contract tests and
+the broader in-repository conformance tests:
 
 ```sh
+clojure -Srepro -M:consumer-test
 clojure -Srepro -M:test
 ```
 

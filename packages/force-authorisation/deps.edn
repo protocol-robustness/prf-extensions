@@ -5,4 +5,6 @@
          :git/sha "85983ba2766908d8c68792b090fcfafb378ea468"
          :deps/root "."}}
  :aliases {:test {:extra-paths ["test"]
-                  :extra-deps {org.clojure/test.check {:mvn/version "1.1.1"}}}}}
+                  :extra-deps {org.clojure/test.check {:mvn/version "1.1.1"}}}
+           :consumer-test {:extra-paths ["consumer-test"]
+                           :main-opts ["-m" "prf.extensions.force-authorisation.consumer-test-runner"]}}}

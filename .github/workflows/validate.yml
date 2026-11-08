@@ -21,7 +21,9 @@ jobs:
           cli: 1.11.1.1435
       - name: Test package
         working-directory: packages/${{ matrix.package }}
-        run: clojure -Srepro -M:test
+        run: |
+          clojure -Srepro -M:consumer-test
+          clojure -Srepro -M:test
 
   dependency-boundary:
     runs-on: ubuntu-latest

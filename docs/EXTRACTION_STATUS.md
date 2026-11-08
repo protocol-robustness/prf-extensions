@@ -18,11 +18,14 @@ facade and pin PRF core source to staging commit
 API has no standalone published artifact. The full PRF repository remains a
 broader dependency than the desired API package.
 
-The extracted runtime source imports only the public API facade. The copied
-conformance tests still import PRF implementation namespaces to compare
-extension behavior with core behavior. Those tests pass, but they are not the
-clean independent-consumer test required for Q1; split public API consumer
-tests from core integration tests before claiming that gate.
+The extracted runtime source imports only the public API facade. New
+`consumer-test/` suites exercise both packages without importing PRF
+implementation namespaces; their current local-override runs passed (2 tests,
+6 assertions for force-authorisation; 3 tests, 12 assertions for held-custody).
+The broader copied conformance suites still import PRF implementation
+namespaces and remain integration tests, not clean consumer tests. The direct
+consumer tests have not yet run against a cleanly fetched immutable core
+dependency, so Q1 remains pending.
 
 The Sew-specific force-authorisation adapter was not extracted: it currently
 imports researcher and authority implementation namespaces plus the protocol

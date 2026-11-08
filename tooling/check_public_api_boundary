@@ -7,4 +7,9 @@ if rg --pcre2 -n '\[resolver-sim\.(?!extensions\.api\.v1\b)' packages/*/src; the
   exit 1
 fi
 
-echo "Executable package source imports only the public PRF extension API"
+if rg --pcre2 -n '\[resolver-sim\.' packages/*/consumer-test; then
+  echo "Independent consumer tests import PRF internals directly" >&2
+  exit 1
+fi
+
+echo "Package source uses the public API facade; consumer tests import no PRF internals"
