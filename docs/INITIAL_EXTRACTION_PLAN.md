@@ -51,7 +51,9 @@ protocol-registry namespaces.
   the declared-provider composition check.
 - Keep the broader PRF repository dependency explicit: the API is not yet a
   separately published minimal artifact, so clean external dependency closure
-  remains an open gate.
+  remains an open gate. GitHub Actions run `42469160581` has passed both
+  package consumer and package-test jobs using the immutable PRF Git dependency;
+  independent dependency-closure verification is still outstanding.
 
 ### 3. Make package metadata auditable — implemented locally
 

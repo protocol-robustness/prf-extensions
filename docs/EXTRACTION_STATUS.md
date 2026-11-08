@@ -27,10 +27,13 @@ The extracted runtime source imports only the public API facade. New
 implementation namespaces. Both those suites and the broader package suites
 now pass against a temporary JJ workspace materialized at the exact pinned PRF
 staging commit `85983ba2766908d8c68792b090fcfafb378ea468`. This checks the
-declared source revision, but it is still a local-root override rather than a
-clean Git dependency fetch. The broader copied conformance suites import PRF
+declared source revision. In GitHub Actions run `42469160581`, both package
+clean-checkout consumer and package-test jobs also passed while resolving the
+pinned PRF Git dependency. The broader copied conformance suites import PRF
 implementation namespaces and remain integration tests, not clean consumer
-tests. Q1 remains pending until clean external dependency resolution passes.
+tests. Clean external resolution is demonstrated; independent dependency
+closure verification remains pending because the pinned dependency is the full
+PRF repository rather than a narrow API artifact.
 
 The package `:test` aliases now invoke explicit test runners. Before this fix,
 the documented command opened a REPL and did not run the suite.
@@ -118,15 +121,14 @@ unset.
    separate governance facts.
 2. Publish or independently qualify a narrow immutable PRF API artifact and
    point both packages at it.
-3. Run clean-checkout package tests against the pinned dependency without a
-   local-root override.
-4. Independently verify package dependency closure and bind source/artifact
+3. Independently verify package dependency closure and bind source/artifact
    roots when there is a release artifact.
-5. Separate the Sew adapter's research/authority inputs behind public
+4. Separate the Sew adapter's research/authority inputs behind public
    contracts, then extract and qualify it.
-6. Run the new manifest and composition checks in CI, enable concept validation
+5. Re-run package-manifest validation in CI after the setup download issue;
+   enable concept validation
    after the pinned loader is fetchable, and retain qualification evidence.
-7. Update PRF to consume pinned bundles/packages only after the new roots and
+6. Update PRF to consume pinned bundles/packages only after the new roots and
    dependency closure are independently reviewed.
 
 The initial repository source has been pushed to the public `main` branch.
