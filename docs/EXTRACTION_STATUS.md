@@ -95,13 +95,13 @@ publication, or a claim of root equivalence.
 ## Candidate source identities
 
 At candidate commit
-`c0106c83830edf5e725b6bd49372ee09817ad4aa` (repository tree
-`0d2b512546e1e8fe002f9414a5b5398e69b77517`), the Git subtree identities are:
+`5155de27e16a62a78bf02bc9b1fb8d3db7852e2e` (repository tree
+`d360881c485c5f80921226ca132b8bd8d68219c4`), the Git subtree identities are:
 
 | Path | Git tree ID |
 |---|---|
 | `packages/force-authorisation/` | `ec2b351e471c6eec3a7b56d5d7cc9567ef2a7b65` |
-| `packages/held-custody/` | `188b7ea2d79d5a0017bf953001ff4f09a5a190ee` |
+| `packages/held-custody/` | `924320451700e4c62a7087459c9f3a2af310db1b` |
 | `concepts/` | `d78360844b22b066ca55e53d45b4db8635edccc3` |
 
 These Git object IDs identify the candidate source directories. They are not
