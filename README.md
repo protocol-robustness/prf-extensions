@@ -23,6 +23,11 @@ independently qualified releases. The source pin is reproducible, but its
 repository dependency closure is broader than a future standalone API
 artifact.
 
+Concept validation uses the loader from PRF commit
+`e4f9bae492c2a1dd29f771886ec08af69e52f9b6`; that commit is currently local to
+the PRF workspace. The validation workflow becomes runnable from a clean
+GitHub checkout after the PRF loader commit is available from the remote.
+
 ## Validate
 
 From the repository root:

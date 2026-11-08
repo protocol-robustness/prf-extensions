@@ -45,6 +45,11 @@ blocked because Clojure could not write the shared `~/.gitlibs` cache. Package
 tests therefore used a temporary local-root override; the committed package
 manifests retain the immutable staging source pin.
 
+The concept-validation workflow uses the bundle loader from PRF commit
+`e4f9bae492c2a1dd29f771886ec08af69e52f9b6`, which is not yet available from
+the PRF remote. Its validation passed locally with a local-root override; the
+GitHub workflow cannot pass until that exact loader revision is published.
+
 ## Concept identity migration
 
 The source catalogue validated in PRF at revision

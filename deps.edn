@@ -4,6 +4,6 @@
  {:validate-concepts
   {:extra-deps {org.protocol-robustness/prf-core
                 {:git/url "https://github.com/protocol-robustness/protocol-robustness-framework.git"
-                 :git/sha "85983ba2766908d8c68792b090fcfafb378ea468"
+                 :git/sha "e4f9bae492c2a1dd29f771886ec08af69e52f9b6"
                  :deps/root "."}}
    :main-opts ["-m" "validate-concepts"]}}}
