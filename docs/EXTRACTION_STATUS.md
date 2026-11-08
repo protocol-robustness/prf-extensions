@@ -131,6 +131,10 @@ unset.
 
 The initial repository source has been pushed to the public `main` branch.
 No package artifact has been published, no staging admission has occurred, and
-no independent qualification or deployment is claimed. Current GitHub Actions
-qualification for `188d10760f113b7da715000947ebcf1674a6cdf4` is in progress after
-a retry of setup-only failures; its final result must be recorded separately.
+no independent qualification or deployment is claimed. For GitHub Actions run
+`42469160581` on `188d10760f113b7da715000947ebcf1674a6cdf4`, force-authorisation,
+held-custody, composition, and dependency-boundary jobs passed. The
+package-manifest job remains unqualified because `setup-clojure` failed to
+download its toolchain after retries; rerun that job when the download service
+is available. Concept validation is not part of this run until its pinned PRF
+loader revision is integrated and fetchable.
