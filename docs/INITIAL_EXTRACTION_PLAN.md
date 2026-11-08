@@ -1,6 +1,7 @@
 # Initial `prf-extensions` extraction plan
 
-Status: **local source candidate; pending integration review and publication**.
+Status: **initial source candidate published to `prf-extensions` main; package
+qualification and PRF integration remain pending**.
 
 ## Review of ADR-0006
 
@@ -78,12 +79,14 @@ protocol-registry namespaces.
 - Treat any missing remote, policy, owner, or dependency as a blocker; do not
   manufacture approval or qualification records.
 
-### 6. Establish repository ownership and remote — blocked on authorized setup
+### 6. Establish repository ownership and remote — remote established; ownership record pending
 
-- Configure the canonical remote and repository owners through the authorized
-  GitHub/repository workflow.
-- Preserve the local candidate and its commit lineage until the remote exists.
-- Do not push to PRF staging or main as a substitute for creating the separate
+- The public `prf-extensions` remote now exists and the initial candidate is
+  present on its `main` branch.
+- Record the responsible package and repository owners through the repository
+  governance workflow; the existence of a GitHub organization/repository is not
+  itself a release approval or qualification.
+- Do not push to PRF staging or main as a substitute for the separate
   extensions repository.
 
 ### 7. Integrate incrementally — future

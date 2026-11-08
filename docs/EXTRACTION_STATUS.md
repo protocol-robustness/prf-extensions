@@ -1,7 +1,9 @@
 # Initial extraction status
 
-Status: **incubating local extraction; not published or independently
-qualified**.
+Status: **incubating public source repository; not released or independently
+qualified**. The repository remote is configured and the initial source
+candidate has been pushed to `main`. This is source publication, not package
+release, qualification, or deployment.
 
 ## Included
 
@@ -77,7 +79,7 @@ The concept-validation workflow uses the bundle loader from PRF commit
 the PRF remote. Its validation passed locally with a local-root override; the
 GitHub workflow therefore does not yet run concept validation. The root
 command is available for local validation and can be enabled in CI after that
-exact loader revision is published.
+exact loader revision is integrated and fetchable from PRF's remote.
 
 ## Concept identity migration
 
@@ -111,7 +113,9 @@ unset.
 
 ## Remaining release gates
 
-1. Establish the repository remote and owners through the authorized workflow.
+1. Record and verify repository ownership/release responsibility. The public
+   repository remote is established; ownership and release authority remain
+   separate governance facts.
 2. Publish or independently qualify a narrow immutable PRF API artifact and
    point both packages at it.
 3. Run clean-checkout package tests against the pinned dependency without a
@@ -125,4 +129,8 @@ unset.
 7. Update PRF to consume pinned bundles/packages only after the new roots and
    dependency closure are independently reviewed.
 
-No remote is configured. No publication or staging action has been performed.
+The initial repository source has been pushed to the public `main` branch.
+No package artifact has been published, no staging admission has occurred, and
+no independent qualification or deployment is claimed. Current GitHub Actions
+qualification for `188d10760f113b7da715000947ebcf1674a6cdf4` is in progress after
+a retry of setup-only failures; its final result must be recorded separately.
