@@ -1,6 +1,8 @@
 (ns prf.extensions.integration.composition-test
   (:require [clojure.test :refer [deftest is testing]]
             [clojure.edn :as edn]
+            [resolver-sim.extensions.registry :as registry]
+            [resolver-sim.extensions.resolution :as resolution]
             [prf.extensions.force-authorisation.manifest :as force-auth]
             [prf.extensions.held-custody.manifest :as held-custody]))
 
@@ -30,6 +32,26 @@
                           (:package/dependencies manifest)))
           manifests))))
 
+(defn register-packages [packages]
+  (reduce registry/register-package (registry/empty-extension-map) packages))
+
+(defn schema-roots [extension-map]
+  (into {}
+        (mapcat (fn [[_ {:keys [capability]}]]
+                  (keep (fn [schema-id]
+                          (when schema-id [schema-id (str "sha256:fixture-" schema-id)]))
+                        [(:input-schema capability)
+                         (:output-schema capability)
+                         (:verification/contract capability)])))
+        extension-map))
+
+(defn resolve-held-custody [packages]
+  (let [extension-map (register-packages packages)]
+    (resolution/resolve-requested
+     extension-map
+     [[:force-authorisation/effect-evidence :held-custody/mutation]]
+     {:schemas (schema-roots extension-map)})))
+
 (deftest held-custody-resolves-the-explicit-force-authorisation-provider
   (testing "the runtime package provides the declared scope verifier"
     (is (some #(= [:prf/force-authorisation
@@ -49,3 +71,19 @@
     (is (= #{required-provider}
            (missing-package-dependencies
             [(second package-manifests)])))))
+
+(deftest runtime-resolver-composes-held-custody-with-force-authorisation
+  (let [result (resolve-held-custody [force-auth/package held-custody/package])]
+    (is (:valid? result) (pr-str (:violations result)))
+    (is (contains? (get-in result [:resolution :extensions/capabilities])
+                   [:prf/force-authorisation
+                    :force-authorisation/scope-verification]))))
+
+(deftest runtime-resolver-rejects-missing-force-authorisation-provider
+  (let [result (resolve-held-custody [held-custody/package])]
+    (is (false? (:valid? result)))
+    (is (some #(and (= :extensions/error-missing-dependency (:violation/id %))
+                    (= [:prf/force-authorisation
+                        :force-authorisation/scope-verification]
+                       (get-in % [:details :capability])))
+              (:violations result)))))

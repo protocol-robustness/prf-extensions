@@ -41,9 +41,7 @@
                          :semantic-type :artifact
                          :cardinality :one}}
    :declared-dependencies
-   [{:capability/kind :prf/content-addressed-artifacts
-     :capability/id :prf/envelope}
-    {:capability/kind :prf/force-authorisation
+   [{:capability/kind :prf/force-authorisation
      :capability/id :force-authorisation/scope-verification}]})
 
 (def override-admission-capability

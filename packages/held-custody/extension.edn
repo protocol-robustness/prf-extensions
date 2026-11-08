@@ -12,9 +12,7 @@
    :input-schema :prf/force-authorised-held-mutation-input.v1
    :output-schema :prf/force-authorised-held-mutation-artifact.v1
    :dependencies
-   [{:capability/kind :prf/content-addressed-artifacts
-     :capability/id :prf/envelope}
-    {:package/id :prf.extensions/force-authorisation
+   [{:package/id :prf.extensions/force-authorisation
      :capability/kind :prf/force-authorisation
      :capability/id :force-authorisation/scope-verification
      :capability/version 1}]}
