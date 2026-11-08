@@ -13,7 +13,11 @@
    :output-schema :prf/force-authorisation-scope-verification.v1}]
  :package/dependencies []
  :package/runtime-dependencies
- [{:dependency/id :prf.core
+ [{:dependency/id :clojure/runtime
+   :source/type :maven
+   :source/library org.clojure/clojure
+   :source/version "1.12.0"}
+  {:dependency/id :prf.core
    :source/type :git
    :source/repository "https://github.com/protocol-robustness/protocol-robustness-framework.git"
    :source/revision "85983ba2766908d8c68792b090fcfafb378ea468"

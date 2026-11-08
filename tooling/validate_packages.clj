@@ -38,7 +38,7 @@
         capabilities))
 
 (defn- runtime-dependencies [deps]
-  (dissoc (:deps deps) 'org.clojure/clojure))
+  (:deps deps))
 
 (defn- matches-runtime-dependency? [declaration [library dependency]]
   (case (:source/type declaration)
@@ -87,7 +87,12 @@
                              (= 1 (count (filter #(matches-runtime-dependency?
                                                    declaration %)
                                                  source-dependencies))))
-                           declared-dependencies))
+                           declared-dependencies)
+                   (every? (fn [source-dependency]
+                             (= 1 (count (filter #(matches-runtime-dependency?
+                                                   % source-dependency)
+                                                 declared-dependencies))))
+                           source-dependencies))
       (fail! "Runtime dependencies differ between manifest and deps.edn"
              {:path path
               :manifest-dependencies declared-dependencies
