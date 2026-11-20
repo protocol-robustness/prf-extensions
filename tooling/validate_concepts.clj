@@ -24,7 +24,7 @@
                    (= :prf.concept-legacy-order.v1 (:schema legacy-order))
                    (= "https://github.com/protocol-robustness/protocol-robustness-framework.git"
                       (:source/repository legacy-order))
-                   (= "e4f9bae492c2a1dd29f771886ec08af69e52f9b6"
+                    (= "84ca777e0fca16030c40f158cf593b2a45184c73"
                       (:source/commit legacy-order))
                    (= "sha256:5dee6023ad4c3820391603e2f427b5a275f2114c3c0b78cf169b5fcef7a63cec"
                       (:source/registry-root legacy-order))
