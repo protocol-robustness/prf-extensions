@@ -25,6 +25,6 @@
   {:extra-paths ["concepts/resources"]
    :extra-deps {org.protocol-robustness/prf-core
                 {:git/url "https://github.com/protocol-robustness/protocol-robustness-framework.git"
-                 :git/sha "e4f9bae492c2a1dd29f771886ec08af69e52f9b6"
+                 :git/sha "84ca777e0fca16030c40f158cf593b2a45184c73"
                  :deps/root "."}}
-   :main-opts ["-m" "validate-concepts"]}}}
+   :main-opts ["-m" "validate-concepts-test"]}}}
