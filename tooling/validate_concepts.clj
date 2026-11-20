@@ -1,7 +1,19 @@
 (ns validate-concepts
   (:require [clojure.edn :as edn]
             [clojure.java.io :as io]
+            [clojure.string :as str]
             [resolver-sim.concepts.bundles :as bundles]))
+
+(def expected-legacy-order-sha256
+  ;; SHA-256 of the 50 legacy concept IDs rendered as `str` values, joined by
+  ;; a single LF with no trailing LF. Keep this independent of the snapshot so
+  ;; changing the snapshot and catalogue lock together cannot redefine order.
+  "231e482d0bc38656751da4008ac82cf9c26a34c7a82499989e5c2c2c49f9bd33")
+
+(defn legacy-order-sha256 [concept-order]
+  (let [bytes (.getBytes (str/join "\n" (map str concept-order)) "UTF-8")
+        digest (.digest (java.security.MessageDigest/getInstance "SHA-256") bytes)]
+    (apply str (map #(format "%02x" (bit-and 0xff %)) digest))))
 
 (defn -main [& _]
   (let [lock (edn/read-string (slurp (or (io/resource "concepts/catalogue-lock.edn")
@@ -42,12 +54,15 @@
                       (:source/commit legacy-order))
                    (= "sha256:5dee6023ad4c3820391603e2f427b5a275f2114c3c0b78cf169b5fcef7a63cec"
                       (:source/registry-root legacy-order))
+                   (= expected-legacy-order-sha256
+                      (legacy-order-sha256 authoritative-order))
                    (= authoritative-order concept-order))
       (throw (ex-info "Concept order lock does not cover the bundle catalogue exactly"
                       {:expected-concept-count (:concept-count lock)
                        :ordered-concept-count (count concept-order)
                        :catalogue-concept-count (count concept-ids)
-                       :authoritative-order-matches? (= authoritative-order concept-order)})))
+                       :authoritative-order-matches? (= authoritative-order concept-order)
+                       :authoritative-order-sha256 (legacy-order-sha256 authoritative-order)})))
 
     (when-not (= (:bundles lock) actual-bundles)
       (throw (ex-info "Resolved bundle roots differ from the lock"
