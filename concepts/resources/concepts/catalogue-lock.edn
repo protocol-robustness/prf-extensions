@@ -1,0 +1,66 @@
+{:schema :prf.concept-catalogue-lock.v1
+ :catalogue/root "sha256:96b8e0d5d7a7dc71ad83100481475b7caadc5291fec274fc751dc6efc6b9ed10"
+ :concept-count 50
+ :registry-entry-overrides
+ {:allocation/fractional-remainder {:concept/name "Fractional Remainder"}}
+ :concept-order
+ [:verifiable-assurance/forensic-confidence
+  :consensus/authority
+  :consensus/evidence
+  :consensus/finality
+  :consensus/escalation
+  :consensus/liveness
+  :consensus/legitimacy
+  :allocation/partial-fill
+  :allocation/shortfall
+  :allocation/pro-rata-fairness
+  :allocation/redistribution-fairness
+  :allocation/deferred-claim
+  :allocation/slash-obligation
+  :decision-quality/solvency-status
+  :yield/yield-bearing
+  :attestation/verification
+  :assurance/pro-rata-evm-v2
+  :forensic/evidence-chain
+  :concept/conservation
+  :concept/confidence
+  :concept/configuration
+  :security/force-authorisation
+  :governance/proposed-content
+  :governance/proposed-content-root
+  :framework/content-root
+  :framework/registry-entry-hash
+  :allocation/slash-distribution
+  :allocation/bounty-payable
+  :allocation/bounty-payable-reserve
+  :allocation/deferred-class
+  :mechanism/pro-rata-allocation
+  :allocation/fractional-remainder
+  :framework/research-command
+  :framework/outside-option
+  :framework/incentive
+  :framework/incentive-compatibility
+  :framework/held-custody
+  :framework/research-assignment
+  :framework/review-member-canonical-indices
+  :framework/review-certificate
+  :framework/procedure-execution-witness
+  :framework/protocol-extension-boundary
+  :framework/semantic-commitments
+  :framework/creation-provenance
+  :framework/evidence-policy
+  :framework/currency
+  :framework/privacy-policy
+  :framework/current-privacy-policy
+  :framework/source-creation
+  :assurance/evidence-backed-classification]
+ :bundles
+ {:prf.concepts/foundation
+  {:version "0.2.0"
+   :content-root "sha256:5632530b03d91146aa78984ad0c7b4589be01302cd0b239f617565a5c2fca55c"}
+  :prf.concepts/prf
+  {:version "0.2.0"
+   :content-root "sha256:767fcf0d79f1f84f29ff428423c4ca5defa68d4d0175d9703055e98ed762773c"}
+  :prf.concepts/sew-v1
+  {:version "0.2.0"
+   :content-root "sha256:2f8c5d0177b0671d3b72c125a49ee74e211e9993eb7307c72da1b4f6b0ee4354"}}}

@@ -1,10 +1,14 @@
 (ns validate-concepts
   (:require [clojure.edn :as edn]
+            [clojure.java.io :as io]
             [resolver-sim.concepts.bundles :as bundles]))
 
 (defn -main [& _]
-  (let [lock (edn/read-string (slurp "concepts/catalogue-lock.edn"))
+  (let [lock (edn/read-string (slurp (or (io/resource "concepts/catalogue-lock.edn")
+                                        (throw (ex-info "concept catalogue lock resource is missing" {})))))
         catalogue (bundles/load-bundles "resource:concepts/registry.edn")
+        concept-ids (set (map :concept/id (:concept-bundle-catalogue/concepts catalogue)))
+        concept-order (:concept-order lock)
         actual-bundles
         (into {}
               (map (fn [bundle]
@@ -24,6 +28,14 @@
       (throw (ex-info "Resolved concept count differs from the lock"
                       {:expected (:concept-count lock)
                        :actual (count (:concept-bundle-catalogue/concepts catalogue))})))
+
+    (when-not (and (= (:concept-count lock) (count concept-order))
+                   (= (count concept-order) (count (distinct concept-order)))
+                   (= concept-ids (set concept-order)))
+      (throw (ex-info "Concept order lock does not cover the bundle catalogue exactly"
+                      {:expected-concept-count (:concept-count lock)
+                       :ordered-concept-count (count concept-order)
+                       :catalogue-concept-count (count concept-ids)})))
 
     (when-not (= (:bundles lock) actual-bundles)
       (throw (ex-info "Resolved bundle roots differ from the lock"
